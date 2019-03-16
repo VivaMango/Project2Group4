@@ -1,8 +1,13 @@
 var importedPlayerArray = []
 var teamOneArray = []
 var teamTwoArray = []
+var grids = []
 
+//GAME START
 $(document).ready(function() {
+  teamOneArray.length = 0
+  teamTwoArray.length = 0
+  importedPlayerArray.length = 0
   getPlayers().then(function(data) {
     data.forEach(function(element) {
       makePlayers(element);
@@ -12,16 +17,18 @@ $(document).ready(function() {
     })
     runMuuri();
     newBoardGrid();
-
-    //MODAL POPUP
-  }) //Sequelize gets all players.
-
+    $("#loadModal").modal("show");
+  });
 
 
-  //MODAL CLOSE EVENT LISTENER
-  //TODO PICK FUNCTIONS GO HERE
 
-  //TODO ARRAY MATH FOR WINNER GOES HERE
+  $('#loadModal').on('hidden.bs.modal', function (event) {
+    playGame();
+  })
+
+  $('#endModal').on('hidden.bs.modal', function (event) {
+    location.reload(true)
+  })
 })
 
 
@@ -30,15 +37,78 @@ $(document).ready(function() {
 //RUNNING CODE ABOVE
 //FUNCTION DEFINITIONS BELOW
 
+//function to run on modal close to check gamestate recursively
+function playGame() {
+  if (teamOneArray.length === 0) {
+    columnDragListen(0);
+    columnDragListen(2);
+    firstPick(playGame);
+  } else if (teamTwoArray.length < 5) {
+    nextPick(playGame);
+    // playGame();
+  } else if (teamTwoArray.length = 5) {
+    pickWinner(teamOneArray , teamTwoArray);
+    console.log("Draft Complete")
+  }
+}
+
+function columnDragListen(columnNum) {
+  columnGrids[columnNum].on("dragReleaseEnd" , function (item) {
+    var gotElement = item.getElement()
+   elementAttr = $(gotElement).attr("itemdata")
+   var draftedPlayerObject = importedPlayerArray.find(function(element) {
+     return element.name === elementAttr
+   })
+   playGame();
+  } )
+}
+
 
 //Function designed to recursively be called to start our game.
-function firstPick() {
+function firstPick(pGfn) {
  //TODO Fill span with Team A Pick text, wait for TeamOneArray.length = 1?
+ $("#pickText").html("Team A")
+ $("#pickText").attr("picktext" , "A")
 }
 
 //Function to iterate picks after the first
-function nextPick() {
- //TODO make every pick after pick one If TeamOneArray.length = 1....run nextPick until TeamTwoArray.length = 5?
+function nextPick(pGfn) {
+ var pickText = $("#pickText").attr("picktext")
+ if (pickText === "A") {
+  $("#pickText").html("Team B")
+  $("#pickText").attr("picktext" , "B")
+ } else if (pickText === "B") {
+  $("#pickText").html("Team A")
+  $("#pickText").attr("picktext" , "A")
+ }
+}
+
+function pickWinner(arrayOne , arrayTwo) {
+  //TODO use arrays to determine winning team
+  let onePoints = 0
+  let twoPoints = 0
+  arrayOne.forEach(function(element) {
+    var elPoints = parseInt(element.points)
+    onePoints += elPoints
+  })
+  arrayTwo.forEach(function(element) {
+    var elPoints = parseInt(element.points)
+    twoPoints += elPoints
+  })
+  if (onePoints > twoPoints) {
+    $("#gameWinner").html("Team A")
+    $("#endModal").modal("show");
+  } else if (twoPoints > onePoints) {
+    $("#gameWinner").html("Team B")
+    $("#endModal").modal("show");
+  } else if (onePoints = twoPoints) {
+    $("#gameWinner").html("It's A TIE?! NO OT TONIGHT!")
+    $("#endModal").modal("show");
+  }
+
+  
+
+  //TODO display winnerModal
 }
 
 //Function to update a drafted player for Team One UNNECESSARY, DATA DOESNT NEED TO BE UPDATED IN DATABASE DURING GAMEPLAY
@@ -157,7 +227,6 @@ itemContainers.forEach(function (container) {
       })
       movedPlayerItem.draftedTeam = 1
       teamOneArray.push(movedPlayerItem)
-      console.log(teamOneArray , "tOA")
         break;
       //TEAM 2 OR RIGHT SIDE
       case "board-column done muuri-item muuri-item-shown":
@@ -166,7 +235,6 @@ itemContainers.forEach(function (container) {
       })
       movedPlayerItem.draftedTeam = 2
       teamTwoArray.push(movedPlayerItem)
-      console.log(teamTwoArray , "tTA")
         break;
       //MIDDLE UNSELECTED
       case "board-column working muuri-item muuri-item-shown":
@@ -181,6 +249,7 @@ itemContainers.forEach(function (container) {
     boardGrid.refreshItems().layout();
   });
 
+  // THIS WAS GOOD
   columnGrids.push(grid);
 
 });
