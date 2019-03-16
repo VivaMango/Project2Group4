@@ -41,6 +41,8 @@ $(document).ready(function() {
     winSubText.text("Team Submitted to Database!")
     winSubAlert.append(winSubText)
     $("#winputGroup").prepend(winSubAlert)
+    $("#winSaveBtn").attr("class" , "btn btn-success disabled")
+    $("#winSaveBtn").text("Team Saved")
   })
 })
 
@@ -187,7 +189,7 @@ function makeNewItem(PlayerObject) {
     newBoardItemContent.append(newImageSpan)
     newBoardItemContent.append(newTextSpan)
     newBoardItemContent.append(newBreak)
-    newBoardItemContent.append(newPointsSpan)
+    // newBoardItemContent.append(newPointsSpan)
     newBoardItem.append(newBoardItemContent)
   $("#chooseTeamBoard").append(newBoardItem)
 };
