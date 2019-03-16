@@ -1,13 +1,14 @@
-var importedPlayerArray = []
-var teamOneArray = []
-var teamTwoArray = []
-var grids = []
+// INIT ARRAYS
+var importedPlayerArray = [];
+var teamOneArray = [];
+var teamTwoArray = [];
+var grids = [];
 
-//GAME START
+//GAME START ON PAGE LOAD
 $(document).ready(function() {
-  teamOneArray.length = 0
-  teamTwoArray.length = 0
-  importedPlayerArray.length = 0
+  teamOneArray.length = 0;
+  teamTwoArray.length = 0;
+  importedPlayerArray.length = 0;
   getPlayers().then(function(data) {
     data.forEach(function(element) {
       makePlayers(element);
@@ -20,71 +21,65 @@ $(document).ready(function() {
     $("#loadModal").modal("show");
   });
 
-
-
   $('#loadModal').on('hidden.bs.modal', function (event) {
     playGame();
-  })
+  });
 
   $('#endModal').on('hidden.bs.modal', function (event) {
-    location.reload(true)
-  })
+    location.reload(true);
+  });
 })
-
-
-
 
 //RUNNING CODE ABOVE
 //FUNCTION DEFINITIONS BELOW
 
-//function to run on modal close to check gamestate recursively
+//CORE GAME FUNCTION
 function playGame() {
   if (teamOneArray.length === 0) {
     columnDragListen(0);
     columnDragListen(2);
-    firstPick(playGame);
+    firstPick();
   } else if (teamTwoArray.length < 5) {
-    nextPick(playGame);
-    // playGame();
+    nextPick();
   } else if (teamTwoArray.length = 5) {
     pickWinner(teamOneArray , teamTwoArray);
     console.log("Draft Complete")
   }
-}
+};
 
+//ATTACHES DRAG RELEASE EVENT LISTENER TO MUURI COLUMNS
 function columnDragListen(columnNum) {
   columnGrids[columnNum].on("dragReleaseEnd" , function (item) {
     var gotElement = item.getElement()
-   elementAttr = $(gotElement).attr("itemdata")
-   var draftedPlayerObject = importedPlayerArray.find(function(element) {
-     return element.name === elementAttr
-   })
-   playGame();
+    elementAttr = $(gotElement).attr("itemdata")
+    var draftedPlayerObject = importedPlayerArray.find(function(element) {
+      return element.name === elementAttr
+    })
+    playGame();
   } )
-}
+};
 
 
-//Function designed to recursively be called to start our game.
-function firstPick(pGfn) {
- //TODO Fill span with Team A Pick text, wait for TeamOneArray.length = 1?
- $("#pickText").html("Team A")
- $("#pickText").attr("picktext" , "A")
-}
-
-//Function to iterate picks after the first
-function nextPick(pGfn) {
- var pickText = $("#pickText").attr("picktext")
- if (pickText === "A") {
-  $("#pickText").html("Team B")
-  $("#pickText").attr("picktext" , "B")
- } else if (pickText === "B") {
+//STARTS OUR PICK STATE
+function firstPick() {
   $("#pickText").html("Team A")
   $("#pickText").attr("picktext" , "A")
- }
-}
+};
 
+//ITERATING OUR PICK STATE
+function nextPick() {
+  var pickText = $("#pickText").attr("picktext")
+  if (pickText === "A") {
+    $("#pickText").html("Team B")
+    $("#pickText").attr("picktext" , "B")
+ } else if (pickText === "B") {
+    $("#pickText").html("Team A")
+    $("#pickText").attr("picktext" , "A")
+  }
+};
+
+//PICKS A WINNER ONCE OUR ARRAYS ARE FILLED
 function pickWinner(arrayOne , arrayTwo) {
-  //TODO use arrays to determine winning team
   let onePoints = 0
   let twoPoints = 0
   arrayOne.forEach(function(element) {
@@ -105,11 +100,7 @@ function pickWinner(arrayOne , arrayTwo) {
     $("#gameWinner").html("It's A TIE?! NO OT TONIGHT!")
     $("#endModal").modal("show");
   }
-
-  
-
-  //TODO display winnerModal
-}
+};
 
 //Function to update a drafted player for Team One UNNECESSARY, DATA DOESNT NEED TO BE UPDATED IN DATABASE DURING GAMEPLAY
 function teamOneDraft(draftedPlayer) {
@@ -118,7 +109,7 @@ function teamOneDraft(draftedPlayer) {
       url: `/api/tokyo_draft/teamone/${draftedPlayer.Id}`,
       data: draftedPlayer
     }).then(getPlayers);
-}
+};
 
 //Function to update a drafted player for Team Two UNNECESSARY, DATA DOESNT NEED TO BE UPDATED IN DATABASE DURING GAMEPLAY
 function teamTwoDraft(draftedPlayer) {
@@ -127,19 +118,19 @@ function teamTwoDraft(draftedPlayer) {
       url: `/api/tokyo_draft/teamtwo/${draftedPlayer.Id}`,
       data: draftedPlayer
     }).then(getPlayers);
-}
+};
 
-
+//UNNECESSARY FOR 1.0
 function createPlayer(createdPlayer) {
   //Unnecessary for 1.0
-}
+};
 
-//Function to get all players from database
+//GETS ALL PLAYERS FROM DATABASE
 function getPlayers() {
-   return $.get("/api/tokyo_draft" , function(data) { return data })
-}
+  return $.get("/api/tokyo_draft" , function(data) { return data })
+};
 
-//Constructor that takes a single Row array from Sequelize and turns it into a format we want.
+//CONSTRUCTOR FOR PLAYER OBJECTS
 //TODO Add ID to constructor/Player Objects
 function Player(name, teamName, points, drafted, draftedTeam, photoURL) {
   this.name = name;
@@ -148,46 +139,51 @@ function Player(name, teamName, points, drafted, draftedTeam, photoURL) {
   this.drafted = drafted;
   this.draftedTeam = draftedTeam;
   this.photoURL = photoURL;
-}
-
-//Function iterating our getPlayers response and making a variable for each.
-//TODO add ID
-function makePlayers(rowData) {
-    var newPlayer = new Player (rowData.name , rowData.teamName , rowData.points , rowData.drafted , rowData.draftedTeam , rowData.photoURL)
-    importedPlayerArray.push(newPlayer)
 };
 
+//TAKES A SEQUELIZE ROW AND MAKES A NEW PLAYER OBJECT
+//TODO add ID
+function makePlayers(rowData) {
+  var newPlayer = new Player (rowData.name , rowData.teamName , rowData.points , rowData.drafted , rowData.draftedTeam , rowData.photoURL)
+  importedPlayerArray.push(newPlayer)
+};
+
+//DYNAMICALLY CREATES MUURI CONTAINERS AND POPULATES THEM WITH PLAYER OBJECT INFORMATION
 //TODO add line break between name and points, maybe add team name to cards if possible
 function makeNewItem(PlayerObject) {
   var newBoardItem = $("<div>")
-  newBoardItem.attr("itemData" , `${PlayerObject.name}`)
-  newBoardItem.addClass("board-item")
+    newBoardItem.attr("itemData" , `${PlayerObject.name}`)
+    newBoardItem.addClass("board-item")
   var newBoardItemContent = $("<div>")
-  newBoardItemContent.addClass("board-item-content")
+    newBoardItemContent.addClass("board-item-content")
   var newImageSpan = $("<span>")
   var newImg = $("<img>")
-  newImg.attr("src" , PlayerObject.photoURL)
-  newImageSpan.append(newImg)
+    newImg.attr("src" , PlayerObject.photoURL)
+    newImg.addClass("playerImg")
+    newImageSpan.append(newImg)
   var newTextSpan = $("<span>")
-  newSpanTextString = PlayerObject.name
-  newTextSpan.append(newSpanTextString)
+    newSpanTextString = PlayerObject.name
+    newTextSpan.append(newSpanTextString)
+    newTextSpan.addClass("playerCardText")
+  var newBreak = $("<br>")
   var newPointsSpan = $("<span>")
-  newSpanPointsString = PlayerObject.points
-  newPointsSpan.append(newSpanPointsString)
-  newBoardItemContent.append(newImageSpan)
-  newBoardItemContent.append(newTextSpan)
-  newBoardItemContent.append(newPointsSpan)
-  newBoardItem.append(newBoardItemContent)
+    newPointsSpan.addClass("playerCardText")
+    newSpanPointsString = (`Points: ${PlayerObject.points}`)
+    newPointsSpan.append(newSpanPointsString)
+    newBoardItemContent.append(newImageSpan)
+    newBoardItemContent.append(newTextSpan)
+    newBoardItemContent.append(newBreak)
+    newBoardItemContent.append(newPointsSpan)
+    newBoardItem.append(newBoardItemContent)
   $("#chooseTeamBoard").append(newBoardItem)
-}
+};
 
-
-
-//MUURI STUFF
+//MUURI CONFIG
 var itemContainers = [].slice.call(document.querySelectorAll('.board-column-content'));
 var columnGrids = [];
 var boardGrid;
 
+//GENERATES MUURI GRIDS FROM DOM INFO
 function runMuuri() {
 itemContainers.forEach(function (container) {
 
@@ -253,8 +249,9 @@ itemContainers.forEach(function (container) {
   columnGrids.push(grid);
 
 });
-}
+};
 
+//INIT NEW MUURI BOARD
 function newBoardGrid() {
   boardGrid = new Muuri('.board', {
     layoutDuration: 400,

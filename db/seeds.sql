@@ -1,12 +1,11 @@
 //Manual
 insert statements
 USE tokyo_draft;
-//WESTERN CONFERENCE
-//GOLDEN STATE WARRIORS
+
 INSERT INTO players
     (name , teamName , points , drafted , draftedTeam , photoURL , createdAt , updatedAt)
 VALUES
-    ("LeBron james" , "LOS ANGELES LAKERS SF" , "28.1" , false , 0 , "https://sportshub.cbsistatic.com/i/r/2018/10/10/4c691e77-51bc-452d-89aa-b7885f9161bc/thumbnail/100x100/4e100e7b31ba04cfd59f73e8a0eda861/400553.png", "1000-01-01 00:00:00", "1000-01-01 00:00:00");
+    ("LeBron James" , "LOS ANGELES LAKERS SF" , "28.1" , false , 0 , "https://sportshub.cbsistatic.com/i/r/2018/10/10/4c691e77-51bc-452d-89aa-b7885f9161bc/thumbnail/100x100/4e100e7b31ba04cfd59f73e8a0eda861/400553.png", "1000-01-01 00:00:00", "1000-01-01 00:00:00");
 INSERT INTO players
     (name , teamName , points , drafted , draftedTeam , photoURL, createdAt , updatedAt)
 VALUES

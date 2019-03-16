@@ -28,8 +28,29 @@
     color: #fff;
     border-radius: 3px 3px 0 0;
     font-family: 'Monoton', cursive;
-    font-size: 30px;
+    font-size: 40px;
   }
+
+  .playerCardText {
+    color: #FFF;
+    text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
+    /* font-weight: bold; */
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+
+  #pickContainer {
+    font-family: 'Monoton', cursive;
+    font-size: 30px;
+    color: #fff;
+  }
+
+  #pickText {
+    font-family: 'Monoton', cursive;
+    font-size: 30px;
+    color: #fff;
+  }
+
   @media (max-width: 600px) {
     .board-column-header {
       text-indent: -1000px;
@@ -60,8 +81,9 @@
   }
   .board-item {
     position: absolute;
-    width: 30%;
+    width: 160px;
     margin: 5px 0;
+    opacity: 0.95;
   }
   .board-item.muuri-item-releasing {
     z-index: 9998;
@@ -75,10 +97,10 @@
   }
   .board-item-content {
     position: relative;
-    padding: 20px;
-    background: #fff;
+    padding: 15px;
+    background: #FFF;
     border-radius: 4px;
-    font-size: 17px;
+    font-size: 14px;
     cursor: pointer;
     -webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
     box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
@@ -140,7 +162,7 @@
     width: 100%;
   }
 body{
-  background-image: url(../img/865825bfcb9a048.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+    background-image: url(../img/tokyoDraftv2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
