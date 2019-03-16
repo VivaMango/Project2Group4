@@ -28,6 +28,20 @@ $(document).ready(function() {
   $('#endModal').on('hidden.bs.modal', function (event) {
     location.reload(true);
   });
+
+  $("#winSaveBtn").on("click" , function (event) {
+    console.log("Button Clicked")
+    var winnerName = $("#winUser").val().trim()
+    var winTeamName = $("#winTeam").val().trim()
+    console.log(winnerName , winTeamName)
+    var winSubAlert = $("<div>")
+    winSubAlert.addClass("alert alert-success")
+    winSubAlert.attr("role" , "alert")
+    var winSubText = $("<p>")
+    winSubText.text("Team Submitted to Database!")
+    winSubAlert.append(winSubText)
+    $("#winputGroup").prepend(winSubAlert)
+  })
 })
 
 //RUNNING CODE ABOVE

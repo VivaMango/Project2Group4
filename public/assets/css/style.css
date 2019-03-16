@@ -156,6 +156,16 @@
     right: 0;
   }
 
+  #winModalHeader {
+    font-size: 30px;
+    text-align: center;
+  }
+
+  #gameWinner {
+    font-size: 30px;
+    text-align: center;
+  }
+
   img {
     vertical-align: middle;
     display: table-cell;
