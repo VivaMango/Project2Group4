@@ -8,8 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tokyo Draft</title>
-    <!-- google font -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -23,12 +24,12 @@
 
 </head>
 
-<body>
+<body class="img-fluid max-width" >
 
     <div style="text-align:center;">
-        <button class="button" style="vertical-align:middle"><span> Play Game </span></button>
+        <!-- <button class="button" style="vertical-align:middle"><span> Play Game </span></button> -->
         <span id="pickingSpan">
-            <p>Currently Picking: <p id="pickText"></p></p>
+            <p id="pickContainer">Currently Picking: <p id="pickText"></p></p>
         </span>
     </div>
 
@@ -53,12 +54,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-    <script src="https://unpkg.com/muuri@0.6.3/dist/muuri.min.js"></script>
-    <script type="text/javascript" src="/assets/js/client.js"></script>
-
-
 </body>
 
 <!-- PAGE LOAD MODAL GOES HERE -->
@@ -72,7 +67,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Game Instructions Go HERE</p>
+                <p>Tokyo Draft is a Two Team Game.</p>
+                <p>Each Team begins with a pool of NBA Players in the middle</p>
+                <p>Each Team Selects a group of 5 Players</p>
+                <p>Players are selected in a Draft format.</p>
+                <p>Beginning with Team A, picks are traded back and forth until each Team is filled</p>
+                <p>After each Team is filled, the Game is played and a Winner is determined!</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close to Play!</button>
@@ -100,5 +100,14 @@
         </div>
     </div>
 </div>
+
+
+<!-- Muuri and HammerJS for drag dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.3.1/web-animations.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+<script src="https://unpkg.com/muuri@0.6.3/dist/muuri.min.js"></script>
+
+<!-- ClientSide JavaScript Link -->
+<script type="text/javascript" src="/assets/js/client.js"></script>
 
 </html>
