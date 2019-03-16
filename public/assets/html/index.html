@@ -86,13 +86,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">...and the winner is:</h5>
+                <h5 id="winModalHeader" class="modal-title">...and the winner is:</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p id="gameWinner"></p>
+                <p>Input your Name and Save your winning Team!</p>
+                <div id="winputGroup" class="input-group mb-3">
+                    <input id="winUser" type="text" class="form-control" placeholder="User Name" aria-label="Username" aria-describedby="basic-addon1">
+                    <input id="winTeam" type="text" class="form-control" placeholder="Give your winning team a name" aria-label="Teamname" aria-describedby="basic-addon1">
+                    <button id="winSaveBtn" class="btn btn-primary" type="button">Save your Team!</button>
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close to Play Again!</button>
