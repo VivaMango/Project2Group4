@@ -7,4 +7,4 @@ Knowledge of NBA players, and March Madness is not mandatory, but would help A-L
 Player with the most points wins!
 
 
-# [Slideshow](https://docs.google.com/presentation/d/1znH4ljwTmxzOyQGp9Cwd_dA5t5h4wCLEesTqQpSbOso/edit?usp=sharing)
+# [Slides](https://docs.google.com/presentation/d/1znH4ljwTmxzOyQGp9Cwd_dA5t5h4wCLEesTqQpSbOso/edit?usp=sharing)
