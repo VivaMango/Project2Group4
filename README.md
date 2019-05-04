@@ -6,5 +6,6 @@ The player that chooses the basketball players with the best stats wins
 Knowledge of NBA players, and March Madness is not mandatory, but would help A-LOT. (2019 stats current)
 Player with the most points wins!
 
+# [Live](https://tokyo-draft-mango.herokuapp.com/)
 
 # [Slides](https://docs.google.com/presentation/d/1znH4ljwTmxzOyQGp9Cwd_dA5t5h4wCLEesTqQpSbOso/edit?usp=sharing)
